@@ -150,24 +150,3 @@ export type Testimonial = {
   text: string;
   rating: number;
 };
-
-export const testimonials: Testimonial[] = [
-  {
-    name: "Victoria & James",
-    origin: "London, UK",
-    text: "The driver was punctual, the car immaculate. But what made it special was our guide — she knew every corner, every story. We felt like royalty touring our own city.",
-    rating: 5,
-  },
-  {
-    name: "Hiroshi T.",
-    origin: "Tokyo, Japan",
-    text: "I've done private tours in 20 countries. This was the first time I felt the car, the driver, and the guide were all working together perfectly. Flawless experience.",
-    rating: 5,
-  },
-  {
-    name: "Sarah Mitchell",
-    origin: "New York, USA",
-    text: "Booked the Vatican tour for my parents' anniversary. They still talk about it daily. The skip-the-line access alone was worth it, but the personal attention made it unforgettable.",
-    rating: 5,
-  },
-];

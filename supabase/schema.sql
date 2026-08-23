@@ -35,11 +35,23 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   status TEXT NOT NULL DEFAULT 'unread' CHECK (status IN ('unread', 'read', 'replied'))
 );
 
--- 3. Enable Row Level Security
+-- 3. Reviews table (public display + public submission)
+CREATE TABLE IF NOT EXISTS reviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at TIMESTAMPTZ DEFAULT now(),
+  name TEXT NOT NULL,
+  origin TEXT,
+  rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  comment TEXT NOT NULL,
+  approved BOOLEAN NOT NULL DEFAULT true
+);
+
+-- 4. Enable Row Level Security
 ALTER TABLE reservations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
--- 4. Allow public (anonymous) inserts for the booking forms
+-- 5. Allow public (anonymous) inserts for the booking forms
 CREATE POLICY "Allow public insert on reservations"
   ON reservations FOR INSERT TO anon
   WITH CHECK (true);
@@ -48,8 +60,28 @@ CREATE POLICY "Allow public insert on contact_messages"
   ON contact_messages FOR INSERT TO anon
   WITH CHECK (true);
 
--- 5. Restrict reads to authenticated users only (no policy = denied by default)
+CREATE POLICY "Allow public insert on reviews"
+  ON reviews FOR INSERT TO anon
+  WITH CHECK (true);
+
+CREATE POLICY "Allow public read on reviews"
+  ON reviews FOR SELECT TO anon
+  USING (true);
+
+-- 6. Restrict reads to authenticated users only (no policy = denied by default)
 -- (No SELECT policies for anon role — only authenticated users can read)
 
--- 6. Migration for existing databases (run only this line on a live DB):
+-- 7. Migration for existing databases (run these lines on a live DB):
 -- ALTER TABLE reservations ADD COLUMN IF NOT EXISTS vehicle_type TEXT NOT NULL DEFAULT 'van';
+-- CREATE TABLE IF NOT EXISTS reviews (
+--   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--   created_at TIMESTAMPTZ DEFAULT now(),
+--   name TEXT NOT NULL,
+--   origin TEXT,
+--   rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+--   comment TEXT NOT NULL,
+--   approved BOOLEAN NOT NULL DEFAULT true
+-- );
+-- ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY "Allow public insert on reviews" ON reviews FOR INSERT TO anon WITH CHECK (true);
+-- CREATE POLICY "Allow public read on reviews" ON reviews FOR SELECT TO anon USING (true);
