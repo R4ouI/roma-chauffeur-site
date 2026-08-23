@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS reservations (
   customer_phone TEXT NOT NULL,
   reservation_date DATE NOT NULL,
   reservation_time TIME NOT NULL,
-  guests TEXT NOT NULL DEFAULT '2 Guests',
+  vehicle_type TEXT NOT NULL DEFAULT 'van' CHECK (vehicle_type IN ('car', 'van')),
   pickup_location TEXT NOT NULL,
   special_requests TEXT,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled'))
@@ -50,3 +50,6 @@ CREATE POLICY "Allow public insert on contact_messages"
 
 -- 5. Restrict reads to authenticated users only (no policy = denied by default)
 -- (No SELECT policies for anon role — only authenticated users can read)
+
+-- 6. Migration for existing databases (run only this line on a live DB):
+-- ALTER TABLE reservations ADD COLUMN IF NOT EXISTS vehicle_type TEXT NOT NULL DEFAULT 'van';

@@ -1,128 +1,58 @@
+export type Vehicle = "car" | "van";
+
 export type TransferRoute = {
   id: string;
   from: string;
   to: string;
   label: string;
-  price: number;
+  priceCar: number;
+  priceVan: number;
   duration: string;
 };
 
 export type TourRoute = {
   id: string;
   label: string;
-  price: number;
+  priceCar: number;
+  priceVan: number;
   hours: number;
+  extraHourPrice?: number;
   description: string;
   highlights: string[];
 };
 
 export const transferRoutes: TransferRoute[] = [
-  { id: "t1", from: "CIA Ciampino Airport", to: "Civitavecchia Cruise Port", label: "Transfer: CIA Ciampino Airport > Civitavecchia Cruise Port", price: 280, duration: "1h 15m" },
-  { id: "t2", from: "CIA Ciampino Airport", to: "FCO Fiumicino Airport", label: "Transfer: CIA Ciampino Airport > FCO Fiumicino Airport", price: 75, duration: "45m" },
-  { id: "t3", from: "CIA Ciampino Airport", to: "Rome", label: "Transfer: CIA Ciampino Airport > Rome", price: 55, duration: "30m" },
-  { id: "t4", from: "Civitavecchia Cruise Port", to: "CIA Ciampino Airport", label: "Transfer: Civitavecchia Cruise Port > CIA Ciampino Airport", price: 280, duration: "1h 15m" },
-  { id: "t5", from: "Civitavecchia Cruise Port", to: "FCO Fiumicino Airport", label: "Transfer: Civitavecchia Cruise Port > FCO Fiumicino Airport", price: 290, duration: "1h 10m" },
-  { id: "t6", from: "Civitavecchia Cruise Port", to: "Rome", label: "Transfer: Civitavecchia Cruise Port > Rome", price: 240, duration: "1h" },
-  { id: "t7", from: "FCO Fiumicino Airport", to: "Civitavecchia Cruise Port", label: "Transfer: FCO Fiumicino Airport > Civitavecchia Cruise Port", price: 290, duration: "1h 10m" },
-  { id: "t8", from: "FCO Fiumicino Airport", to: "Rome", label: "Transfer: FCO Fiumicino Airport > Rome", price: 55, duration: "35m" },
-  { id: "t9", from: "FCO Fiumicino Airport", to: "CIA Ciampino Airport", label: "Transfer: FCO Fiumicino Airport > CIA Ciampino Airport", price: 75, duration: "45m" },
-  { id: "t10", from: "Florence", to: "Rome", label: "Transfer: Florence > Rome", price: 450, duration: "3h 15m" },
-  { id: "t11", from: "Naples", to: "Rome", label: "Transfer: Naples > Rome", price: 420, duration: "2h 30m" },
-  { id: "t12", from: "Rome", to: "CIA Ciampino Airport", label: "Transfer: Rome > CIA Ciampino Airport", price: 55, duration: "30m" },
-  { id: "t13", from: "Rome", to: "Civitavecchia Cruise Port", label: "Transfer: Rome > Civitavecchia Cruise Port", price: 240, duration: "1h" },
-  { id: "t14", from: "Rome", to: "FCO Fiumicino Airport", label: "Transfer: Rome > FCO Fiumicino Airport", price: 55, duration: "35m" },
-  { id: "t15", from: "Rome", to: "Florence", label: "Transfer: Rome > Florence", price: 450, duration: "3h 15m" },
-  { id: "t16", from: "Rome", to: "Naples", label: "Transfer: Rome > Naples", price: 420, duration: "2h 30m" },
+  { id: "t1", from: "Civitavecchia Cruise Port", to: "Rome", label: "Transfer: Civitavecchia Cruise Port > Rome", priceCar: 230, priceVan: 250, duration: "1h" },
+  { id: "t2", from: "Rome", to: "Civitavecchia Cruise Port", label: "Transfer: Rome > Civitavecchia Cruise Port", priceCar: 230, priceVan: 250, duration: "1h" },
+  { id: "t3", from: "Civitavecchia Cruise Port", to: "FCO Fiumicino Airport", label: "Transfer: Civitavecchia Cruise Port > FCO Fiumicino Airport", priceCar: 200, priceVan: 230, duration: "50m" },
+  { id: "t4", from: "FCO Fiumicino Airport", to: "Civitavecchia Cruise Port", label: "Transfer: FCO Fiumicino Airport > Civitavecchia Cruise Port", priceCar: 200, priceVan: 230, duration: "50m" },
+  { id: "t5", from: "Rome", to: "FCO Fiumicino Airport", label: "Transfer: Rome > FCO Fiumicino Airport", priceCar: 80, priceVan: 100, duration: "35m" },
+  { id: "t6", from: "FCO Fiumicino Airport", to: "Rome", label: "Transfer: FCO Fiumicino Airport > Rome", priceCar: 100, priceVan: 130, duration: "35m" },
+  { id: "t7", from: "Rome", to: "Florence", label: "Transfer: Rome > Florence", priceCar: 600, priceVan: 750, duration: "3h 15m" },
+  { id: "t8", from: "Florence", to: "Rome", label: "Transfer: Florence > Rome", priceCar: 600, priceVan: 750, duration: "3h 15m" },
+  { id: "t9", from: "Rome", to: "Naples", label: "Transfer: Rome > Naples", priceCar: 500, priceVan: 650, duration: "2h 30m" },
+  { id: "t10", from: "Naples", to: "Rome", label: "Transfer: Naples > Rome", priceCar: 500, priceVan: 650, duration: "2h 30m" },
 ];
 
 export const tourRoutes: TourRoute[] = [
   {
     id: "tour1",
-    label: "Tour: Rome Half day – Private chauffeur (4 hours)",
-    price: 350,
-    hours: 4,
-    description: "Essential Rome in half a day — Colosseum exterior, Trevi, Pantheon & Piazza Navona with time for espresso.",
-    highlights: ["Colosseum", "Trevi Fountain", "Pantheon"],
+    label: "Tour: Civitavecchia — pickup from Roma (max 8 hours)",
+    priceCar: 500,
+    priceVan: 600,
+    hours: 8,
+    extraHourPrice: 50,
+    description: "From Roma to the historic port of Civitavecchia — seaside promenade, medieval centre and the Etruscan coast at your own pace.",
+    highlights: ["Civitavecchia", "Etruscan coast", "Seaside promenade"],
   },
   {
     id: "tour2",
-    label: "Tour: Rome Full Day - Private Chauffeur (8 hours)",
-    price: 550,
-    hours: 8,
-    description: "The full Eternal City at your pace. Ancient, baroque and hidden Rome with a dedicated driver-guide.",
-    highlights: ["Vatican", "Colosseum", "Trastevere"],
-  },
-  {
-    id: "tour3",
-    label: "Tour: Civitavecchia Cruise Port > Rome - Full day (9 Hours)",
-    price: 650,
-    hours: 9,
-    description: "From the ship to the heart of Rome and back. Maximise your port day without the stress.",
-    highlights: ["Port pickup", "Rome highlights", "Return on time"],
-  },
-  {
-    id: "tour4",
-    label: "Tour: Orvieto - Civita di Bagnoregio from Civitavecchia Cruise Port Full day (9 hours)",
-    price: 680,
-    hours: 9,
-    description: "Clifftop towns of Umbria & Lazio — Orvieto's Duomo and the breathtaking dying town of Civita.",
-    highlights: ["Orvieto", "Civita di Bagnoregio", "Countryside"],
-  },
-  {
-    id: "tour5",
-    label: "Tour: Orvieto - Assisi from Rome - Private chauffeur Full day (10 hours)",
-    price: 750,
-    hours: 10,
-    description: "Spiritual Umbria: Etruscan Orvieto and Saint Francis' Assisi — frescoes, hills and medieval charm.",
-    highlights: ["Orvieto", "Assisi", "Basilica Papale"],
-  },
-  {
-    id: "tour6",
-    label: "Tour: Pompei - Sorrento - Amalfi Coast from Naples Cruise Port – Private chauffeur – Full day (9 hours)",
-    price: 680,
-    hours: 9,
-    description: "Naples port day: walk through Pompeii, then Sorrento lemons and Amalfi's cliff-hanging coastline.",
-    highlights: ["Pompeii", "Sorrento", "Amalfi Coast"],
-  },
-  {
-    id: "tour7",
-    label: "Tour: Pisa - Florence from Livorno Cruise Port - Full day (9 hours)",
-    price: 680,
-    hours: 9,
-    description: "Tuscany in a day — lean with Pisa, linger in Florence. Perfectly timed for your cruise schedule.",
-    highlights: ["Pisa Tower", "Florence Duomo", "Ponte Vecchio"],
-  },
-  {
-    id: "tour8",
-    label: "Tour: Rome - Etruscan Tour – Private chauffeur (9 hours)",
-    price: 650,
-    hours: 9,
-    description: "Mysterious Etruria: Tarquinia tombs, Cerveteri necropolis and charming Bracciano lake towns.",
-    highlights: ["Tarquinia", "Cerveteri", "Bracciano"],
-  },
-  {
-    id: "tour9",
-    label: "Tour: Civitavecchia - Etruscan Tour – Private chauffeur (9 hours)",
-    price: 650,
-    hours: 9,
-    description: "From port to the Etruscan heartland — uncrowded, UNESCO-listed wonders just inland from Civitavecchia.",
-    highlights: ["Etruscan Necropolis", "Medieval villages", "Countryside"],
-  },
-  {
-    id: "tour10",
-    label: "Tour: Rome - Pompeii - Sorrento - Amalfi Coast - Positano from Rome - Private Driver - Full Day (12 hours)",
-    price: 950,
-    hours: 12,
-    description: "The ultimate day trip from Rome: Pompeii at sunrise, then the full Amalfi ribbon to Positano.",
-    highlights: ["Pompeii", "Sorrento", "Positano"],
-  },
-  {
-    id: "tour11",
-    label: "Tour: Rome - Pisa - Florence - Departure from Rome - Full Day (12 hours)",
-    price: 950,
-    hours: 12,
-    description: "Tuscany's greatest hits in one seamless day — high-speed comfort without the trains or crowds.",
-    highlights: ["Pisa", "Florence", "Tuscan drive"],
+    label: "Tour: Roma — Roma City Tour (max 4 hours)",
+    priceCar: 200,
+    priceVan: 240,
+    hours: 4,
+    description: "The essential Rome loop without a guide — driver only. Colosseum, Trevi and the historic centre with photo stops.",
+    highlights: ["Colosseum", "Trevi Fountain", "Pantheon"],
   },
 ];
 
@@ -147,6 +77,72 @@ export const customLocations = [
   "Civita di Bagnoregio",
   "Tarquinia / Cerveteri",
 ];
+
+export const tourAttractions = [
+  "Colosseum",
+  "Trevi Fountain",
+  "Pantheon",
+  "Piazza Navona",
+  "Spanish Steps",
+  "Vatican Museums",
+  "St. Peter's Basilica",
+  "Castel Sant'Angelo",
+  "Trastevere",
+  "Borghese Gardens",
+  "Circus Maximus",
+  "Appian Way",
+];
+
+// Pricing rules
+// Per-km rates derived from the fixed Rome–Florence (273 km) and Rome–Naples (225 km) routes:
+//   Van: 750/273 ≈ 2.75 and 650/225 ≈ 2.89  →  €2.80/km
+//   Car: 600/273 ≈ 2.20 and 500/225 ≈ 2.22  →  €2.20/km
+export const pricingRates = {
+  transferPerKm: { car: 2.2, van: 2.8 },
+  tourPerHour: { car: 50, van: 60 },
+  customTourMinHours: 4,
+  customTourMaxHours: 12,
+  maxAttractions: 6,
+};
+
+// Approximate road distance from Rome City Center (km) for each hub
+export const distanceFromRome: Record<string, number> = {
+  "Rome City Center": 0,
+  "Vatican City": 4,
+  "Colosseum / Ancient Rome": 3,
+  "Trastevere": 4,
+  "FCO Fiumicino Airport": 30,
+  "CIA Ciampino Airport": 15,
+  "Civitavecchia Cruise Port": 70,
+  "Florence": 273,
+  "Naples": 225,
+  "Naples Cruise Port": 225,
+  "Livorno Cruise Port": 300,
+  "Orvieto": 120,
+  "Assisi": 175,
+  "Pompeii": 240,
+  "Sorrento": 265,
+  "Amalfi / Positano": 275,
+  "Pisa": 350,
+  "Civita di Bagnoregio": 130,
+  "Tarquinia / Cerveteri": 95,
+};
+
+// Direct connections that don't route through Rome
+const distanceOverrides: Record<string, number> = {
+  "FCO Fiumicino Airport|Civitavecchia Cruise Port": 60,
+  "FCO Fiumicino Airport|CIA Ciampino Airport": 30,
+  "CIA Ciampino Airport|Civitavecchia Cruise Port": 85,
+};
+
+export function getDistanceKm(a: string, b: string): number {
+  const key = [a, b].sort().join("|");
+  if (distanceOverrides[key] !== undefined) return distanceOverrides[key];
+  const da = distanceFromRome[a] ?? 0;
+  const db = distanceFromRome[b] ?? 0;
+  if (da <= 5 && db <= 5) return 5; // both points inside Rome
+  return da + db;
+}
 
 export type Testimonial = {
   name: string;

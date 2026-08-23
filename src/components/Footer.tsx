@@ -14,7 +14,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-              Premium private transfers & tours in Rome and beyond. Fixed prices, luxury chauffeur service, 7 guests max.
+              Premium private transfers & tours in Rome and beyond. Fixed prices, luxury chauffeur service, car & van options.
             </p>
             <div className="mt-6 space-y-2 text-sm text-white/70">
               <a href="mailto:maxromeexecutivechauffeur@outlook.it" className="flex items-center gap-2 hover:text-gold-light">

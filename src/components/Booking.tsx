@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
-import { transferRoutes, tourRoutes } from "../data";
+import { transferRoutes, tourRoutes, type Vehicle } from "../data";
 import { supabase } from "../lib/supabase";
 
-type Props = {
-  selectedLabel: string;
-  selectedPrice: number | null;
+export type Selection = {
+  label: string;
+  priceCar: number | null;
+  priceVan: number | null;
 };
 
-export default function Booking({ selectedLabel, selectedPrice }: Props) {
+type Props = {
+  selection: Selection | null;
+};
+
+export default function Booking({ selection }: Props) {
   const [routeLabel, setRouteLabel] = useState("");
-  const [price, setPrice] = useState<number | null>(null);
+  const [priceCar, setPriceCar] = useState<number | null>(null);
+  const [priceVan, setPriceVan] = useState<number | null>(null);
+  const [vehicle, setVehicle] = useState<Vehicle>("van");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [guests, setGuests] = useState("2 Guests");
 
   // Controlled form fields
   const [name, setName] = useState("");
@@ -24,56 +30,61 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
   const [pickup, setPickup] = useState("");
   const [specialRequests, setSpecialRequests] = useState("");
 
-  useEffect(() => {
-    if (selectedLabel) {
-      setRouteLabel(selectedLabel);
-      setPrice(selectedPrice);
-    }
-  }, [selectedLabel, selectedPrice]);
+  const price = vehicle === "van" ? priceVan : priceCar;
 
-  // Sync custom route date/time from CustomRoute component (if available)
   useEffect(() => {
-    if (selectedLabel && selectedLabel.includes("•")) {
-      const parts = selectedLabel.split(" • ");
-      if (parts.length >= 2) {
-        const dateTimePart = parts[parts.length - 1];
-        const dateTimeMatch = dateTimePart.match(/(\d{4}-\d{2}-\d{2})\s+(.+)/);
-        if (dateTimeMatch) {
-          if (!date) setDate(dateTimeMatch[1]);
-          if (!time) setTime(dateTimeMatch[2]);
-        }
-        // Also try to extract pickup from the same label if it contains the custom summary
-        const summaryPart = parts.slice(0, -1).join(" • ");
-        if (summaryPart.includes(" → ") && !pickup) {
-          const firstArrow = summaryPart.indexOf(" → ");
-          const from = summaryPart.slice(0, firstArrow);
-          setPickup(from);
-        }
+    if (selection) {
+      setRouteLabel(selection.label);
+      setPriceCar(selection.priceCar);
+      setPriceVan(selection.priceVan);
+    }
+  }, [selection]);
+
+  // Sync custom route date/time and pickup from CustomRoute component
+  useEffect(() => {
+    if (selection && selection.label.includes(" • ")) {
+      const parts = selection.label.split(" • ");
+      const dateTimePart = parts[parts.length - 1];
+      const dateTimeMatch = dateTimePart.match(/(\d{4}-\d{2}-\d{2})\s+(.+)/);
+      if (dateTimeMatch) {
+        if (!date) setDate(dateTimeMatch[1]);
+        if (!time) setTime(dateTimeMatch[2]);
+      }
+      const summaryPart = parts.slice(0, -1).join(" • ");
+      if (summaryPart.includes(" → ") && !pickup) {
+        const firstArrow = summaryPart.indexOf(" → ");
+        setPickup(summaryPart.slice(0, firstArrow));
       }
     }
-  }, [selectedLabel]);
+  }, [selection]);
 
   const handleRouteChange = (value: string) => {
     setRouteLabel(value);
     setError(null);
     const t = transferRoutes.find((r) => r.label === value);
     if (t) {
-      setPrice(t.price);
+      setPriceCar(t.priceCar);
+      setPriceVan(t.priceVan);
       return;
     }
     const tour = tourRoutes.find((r) => r.label === value);
     if (tour) {
-      setPrice(tour.price);
+      setPriceCar(tour.priceCar);
+      setPriceVan(tour.priceVan);
       return;
     }
-    if (value === "") setPrice(null);
-    if (value.startsWith("Custom:")) {
-      if (selectedPrice) setPrice(selectedPrice);
+    if (value === "") {
+      setPriceCar(null);
+      setPriceVan(null);
+    }
+    if (value.startsWith("Custom:") && selection) {
+      setPriceCar(selection.priceCar);
+      setPriceVan(selection.priceVan);
     }
   };
 
   const isCustom =
-    routeLabel.includes("→") &&
+    routeLabel !== "" &&
     !transferRoutes.some((r) => r.label === routeLabel) &&
     !tourRoutes.some((r) => r.label === routeLabel);
 
@@ -137,7 +148,7 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
       customer_phone: phone.trim(),
       reservation_date: date,
       reservation_time: time,
-      guests,
+      vehicle_type: vehicle,
       pickup_location: pickup.trim(),
       special_requests: specialRequests.trim() || null,
     });
@@ -173,7 +184,7 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
           customer_phone: phone.trim(),
           reservation_date: date,
           reservation_time: time,
-          guests,
+          vehicle,
           pickup_location: pickup.trim(),
           special_requests: specialRequests.trim() || null,
         },
@@ -200,7 +211,7 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-text-secondary">
               Secure your chauffeur in 60 seconds. Choose a fixed-price route
               above, or configure a custom one — then confirm your appointment
-              here. Max 7 guests per vehicle.
+              here. Car seats 4 guests, van seats 7.
             </p>
 
             <div className="mt-10 space-y-6">
@@ -208,12 +219,12 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                 {
                   step: "01",
                   title: "Choose route",
-                  desc: "Transfer, tour or custom — all with fixed or instant estimate. 7 guests max.",
+                  desc: "Transfer, tour or custom — all with fixed or instant estimate.",
                 },
                 {
                   step: "02",
-                  title: "Pick date & time",
-                  desc: "We're available 24/7. Tell us where to meet you.",
+                  title: "Pick vehicle, date & time",
+                  desc: "Car (max 4 guests) or van (max 7). We're available 24/7.",
                 },
                 {
                   step: "03",
@@ -268,8 +279,8 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                 ))}
               </div>
               <p className="mt-4 text-xs text-text-muted">
-                Capacity: up to 7 guests per vehicle • Child seats free • All
-                taxes included
+                Capacity: car up to 4 guests • van up to 7 • Child seats free •
+                All taxes included
               </p>
             </div>
           </div>
@@ -323,7 +334,7 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                   <p className="mt-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-text-primary shadow-sm">
                     Total: €{price}{" "}
                     <span className="font-normal text-text-muted">
-                      • per vehicle • max 7 guests
+                      • {vehicle === "van" ? "Van • max 7 guests" : "Car • max 4 guests"}
                     </span>
                   </p>
                 )}
@@ -359,7 +370,7 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                   )}
                 </div>
                 <p className="mt-2 text-xs text-text-muted">
-                  All routes • max 7 guests • large vehicle available on request
+                  All routes • car max 4 guests • van max 7 guests
                 </p>
 
                 {/* Route selector */}
@@ -376,23 +387,23 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                     <option value="">
                       Choose from the list or build custom...
                     </option>
-                    <optgroup label="— Transfer Routes (fixed price, max 7 pax)">
+                    <optgroup label="— Transfer Routes (fixed price)">
                       {transferRoutes.map((r) => (
                         <option key={r.id} value={r.label}>
-                          {r.label} — €{r.price}
+                          {r.label} — Car €{r.priceCar} / Van €{r.priceVan}
                         </option>
                       ))}
                     </optgroup>
-                    <optgroup label="— Tour Routes (fixed price, max 7 pax)">
+                    <optgroup label="— Tour Routes (fixed price)">
                       {tourRoutes.map((r) => (
                         <option key={r.id} value={r.label}>
-                          {r.label} — €{r.price}
+                          {r.label} — Car €{r.priceCar} / Van €{r.priceVan}
                         </option>
                       ))}
                     </optgroup>
-                    {isCustom && selectedLabel === routeLabel && (
+                    {isCustom && selection?.label === routeLabel && (
                       <option value={routeLabel}>
-                        Custom: {routeLabel} — €{price}
+                        Custom: {routeLabel}
                       </option>
                     )}
                   </select>
@@ -402,13 +413,16 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                       <p className="mt-1 text-sm font-medium text-text-primary">
                         {routeLabel.replace(/^Custom: /, "")}
                       </p>
-                      {price && (
+                      {(priceCar || priceVan) && (
                         <p className="mt-1 text-sm text-text-secondary">
-                          Fixed price:{" "}
+                          Car:{" "}
                           <span className="font-semibold text-text-primary">
-                            €{price}
+                            {priceCar ? `€${priceCar}` : "—"}
                           </span>{" "}
-                          per vehicle • max 7 guests
+                          • Van:{" "}
+                          <span className="font-semibold text-text-primary">
+                            {priceVan ? `€${priceVan}` : "—"}
+                          </span>
                         </p>
                       )}
                       {isCustom && (
@@ -473,24 +487,38 @@ export default function Booking({ selectedLabel, selectedPrice }: Props) {
                       onChange={setTime}
                     />
                   </div>
+
+                  {/* Vehicle selector */}
                   <div>
                     <label className="mb-2 block text-xs font-medium text-text-muted">
-                      Number of Guests * (max 7)
+                      Vehicle *
                     </label>
-                    <select
-                      value={guests}
-                      onChange={(e) => setGuests(e.target.value)}
-                      className="w-full rounded-xl border border-border bg-cream-warm px-4 py-3.5 text-sm text-text-primary outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
-                    >
-                      <option>1 Guest</option>
-                      <option>2 Guests</option>
-                      <option>3 Guests</option>
-                      <option>4 Guests</option>
-                      <option>5 Guests</option>
-                      <option>6 Guests</option>
-                      <option>7 Guests</option>
-                    </select>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {(
+                        [
+                          ["van", "Van", "Up to 7 guests"],
+                          ["car", "Car", "Up to 4 guests"],
+                        ] as const
+                      ).map(([v, label, cap]) => (
+                        <button
+                          key={v}
+                          type="button"
+                          onClick={() => setVehicle(v)}
+                          className={`rounded-xl border px-4 py-3.5 text-left transition-all ${
+                            vehicle === v
+                              ? "border-gold bg-gold/5 ring-2 ring-gold/20"
+                              : "border-border bg-cream-warm hover:border-gold/40"
+                          }`}
+                        >
+                          <span className="block text-sm font-semibold text-text-primary">
+                            {label}
+                          </span>
+                          <span className="text-xs text-text-muted">{cap}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
+
                   <Field
                     label="Hotel / Pickup Location *"
                     name="pickup"

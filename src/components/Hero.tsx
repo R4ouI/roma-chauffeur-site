@@ -4,8 +4,8 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.pexels.com/photos/15562413/pexels-photo-15562413.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1400&w=2200"
-          alt="Colosseum at sunset"
+          src="/BackgroundPicture.jpeg"
+          alt="Rome — eternal city"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/75 to-transparent" />
@@ -60,7 +60,7 @@ export default function Hero() {
             </div>
             <div className="h-10 w-px bg-border" />
             <div>
-              <div className="font-display text-3xl font-medium text-text-primary">27</div>
+              <div className="font-display text-3xl font-medium text-text-primary">12</div>
               <p className="mt-1 text-xs text-text-muted">Fixed-price routes</p>
             </div>
             <div className="h-10 w-px bg-border" />

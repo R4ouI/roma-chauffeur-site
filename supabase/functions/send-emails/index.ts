@@ -25,7 +25,7 @@ interface Reservation {
   customer_phone: string;
   reservation_date: string;
   reservation_time: string;
-  guests: string;
+  vehicle: string;
   pickup_location: string;
   special_requests: string | null;
 }
@@ -89,7 +89,7 @@ function reservationCustomerEmail(r: Reservation): { subject: string; html: stri
           <table style="width:100%;font-size:14px;color:#1a1a1a;border-collapse:collapse">
             <tr><td style="padding:6px 0;color:#8a8a8a">Date</td><td style="padding:6px 0;font-weight:500">${r.reservation_date}</td></tr>
             <tr><td style="padding:6px 0;color:#8a8a8a">Pickup time</td><td style="padding:6px 0;font-weight:500">${r.reservation_time}</td></tr>
-            <tr><td style="padding:6px 0;color:#8a8a8a">Guests</td><td style="padding:6px 0;font-weight:500">${r.guests}</td></tr>
+            <tr><td style="padding:6px 0;color:#8a8a8a">Vehicle</td><td style="padding:6px 0;font-weight:500">${r.vehicle === "van" ? "Van — up to 7 guests" : "Car — up to 4 guests"}</td></tr>
             <tr><td style="padding:6px 0;color:#8a8a8a">Pickup location</td><td style="padding:6px 0;font-weight:500">${r.pickup_location}</td></tr>
             <tr><td style="padding:6px 0;color:#8a8a8a">Price</td><td style="padding:6px 0;font-weight:700;color:#b8860b;font-size:16px">${formatCurrency(r.price)}</td></tr>
           </table>
@@ -123,7 +123,7 @@ function reservationBusinessEmail(r: Reservation): { subject: string; html: stri
           <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Type</td><td style="padding:6px 12px">${r.route_type}</td></tr>
           <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Date</td><td style="padding:6px 12px">${r.reservation_date}</td></tr>
           <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Time</td><td style="padding:6px 12px">${r.reservation_time}</td></tr>
-          <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Guests</td><td style="padding:6px 12px">${r.guests}</td></tr>
+          <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Vehicle</td><td style="padding:6px 12px">${r.vehicle === "van" ? "Van — up to 7 guests" : "Car — up to 4 guests"}</td></tr>
           <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Pickup</td><td style="padding:6px 12px">${r.pickup_location}</td></tr>
           <tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Price</td><td style="padding:6px 12px;font-weight:bold;color:#b8860b">${formatCurrency(r.price)}</td></tr>
           ${r.special_requests ? `<tr><td style="padding:6px 12px;background:#f5f5f5;font-weight:bold">Special</td><td style="padding:6px 12px">${r.special_requests}</td></tr>` : ""}
