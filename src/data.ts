@@ -59,21 +59,14 @@ export const tourRoutes: TourRoute[] = [
 export const customLocations = [
   "Rome City Center",
   "FCO Fiumicino Airport",
-  "CIA Ciampino Airport",
   "Civitavecchia Cruise Port",
   "Vatican City",
   "Colosseum / Ancient Rome",
   "Trastevere",
   "Florence",
   "Naples",
-  "Livorno Cruise Port",
   "Naples Cruise Port",
   "Orvieto",
-  "Assisi",
-  "Pompeii",
-  "Sorrento",
-  "Amalfi / Positano",
-  "Pisa",
   "Civita di Bagnoregio",
   "Tarquinia / Cerveteri",
 ];
@@ -134,6 +127,23 @@ const distanceOverrides: Record<string, number> = {
   "FCO Fiumicino Airport|CIA Ciampino Airport": 30,
   "CIA Ciampino Airport|Civitavecchia Cruise Port": 85,
 };
+
+// Normalize location names so custom selections compare to predefined routes
+// (e.g. "Rome City Center" and "Vatican City" both count as "Rome")
+function normalizeLocation(loc: string): string {
+  const romePoints = ["Rome City Center", "Vatican City", "Colosseum / Ancient Rome", "Trastevere"];
+  if (romePoints.includes(loc)) return "Rome";
+  if (loc === "Naples Cruise Port") return "Naples";
+  return loc;
+}
+
+export function isPredefinedTransfer(from: string, to: string): boolean {
+  return transferRoutes.some(
+    (r) =>
+      normalizeLocation(r.from) === normalizeLocation(from) &&
+      normalizeLocation(r.to) === normalizeLocation(to)
+  );
+}
 
 export function getDistanceKm(a: string, b: string): number {
   const key = [a, b].sort().join("|");

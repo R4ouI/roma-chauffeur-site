@@ -251,9 +251,7 @@ export default function Booking({ selection }: Props) {
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {[
                   "Private chauffeur",
-                  "Meet & greet",
                   "Bottled water",
-                  "Wi-Fi onboard",
                   "Flexible stops",
                   "Hotel / port pickup",
                 ].map((item) => (
@@ -279,8 +277,7 @@ export default function Booking({ selection }: Props) {
                 ))}
               </div>
               <p className="mt-4 text-xs text-text-muted">
-                Capacity: car up to 4 guests • van up to 7 • Child seats free •
-                All taxes included
+                Capacity: car up to 4 guests • van up to 7 • All taxes included
               </p>
             </div>
           </div>

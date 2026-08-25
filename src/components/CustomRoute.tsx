@@ -3,6 +3,7 @@ import {
   customLocations,
   tourAttractions,
   getDistanceKm,
+  isPredefinedTransfer,
   pricingRates,
 } from "../data";
 
@@ -20,6 +21,7 @@ export default function CustomRoute({ onConfirm }: Props) {
   const [time, setTime] = useState("");
 
   const km = useMemo(() => getDistanceKm(from, to), [from, to]);
+  const isDuplicate = kind === "transfer" && isPredefinedTransfer(from, to);
 
   const priceCar =
     kind === "transfer"
@@ -267,16 +269,18 @@ export default function CustomRoute({ onConfirm }: Props) {
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-5">
-                <div>
-                  <p className="text-xs text-text-muted">Car • max 4 guests</p>
-                  <p className="font-display text-3xl font-medium text-text-primary">€{priceCar}</p>
+              {!isDuplicate && (
+                <div className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-5">
+                  <div>
+                    <p className="text-xs text-text-muted">Car • max 4 guests</p>
+                    <p className="font-display text-3xl font-medium text-text-primary">€{priceCar}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-text-muted">Van • max 7 guests</p>
+                    <p className="font-display text-3xl font-medium text-text-primary">€{priceVan}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs text-text-muted">Van • max 7 guests</p>
-                  <p className="font-display text-3xl font-medium text-text-primary">€{priceVan}</p>
-                </div>
-              </div>
+              )}
 
               <ul className="mt-6 space-y-2 text-sm text-text-secondary">
                 <li className="flex gap-2"><span className="text-sage">✓</span> Private chauffeur & premium vehicle</li>
@@ -284,23 +288,43 @@ export default function CustomRoute({ onConfirm }: Props) {
                 <li className="flex gap-2"><span className="text-sage">✓</span> Free cancellation 24h before</li>
               </ul>
 
-              <button
-                onClick={() => {
-                  if (!canConfirm) {
-                    alert("Please select date and pickup time.");
-                    return;
-                  }
-                  onConfirm(`${summary} • ${date} ${time}`, priceCar, priceVan);
-                  document.getElementById("book")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="mt-7 w-full rounded-full bg-gradient-to-r from-gold to-gold-light py-4 text-sm font-semibold text-white shadow-lg shadow-gold/25 hover:shadow-xl"
-              >
-                Use This Custom {kind === "transfer" ? "Transfer" : "Tour"}
-              </button>
+              {isDuplicate ? (
+                <div className="mt-7 rounded-xl border border-gold/30 bg-gold/5 px-4 py-4 text-center">
+                  <p className="text-sm font-semibold text-gold">
+                    This is one of our predefined routes
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-text-secondary">
+                    {from} → {to} is already available as a fixed-price
+                    transfer. Book it from the Predefined Routes section above.
+                  </p>
+                  <a
+                    href="#routes"
+                    className="mt-4 inline-block rounded-full bg-gradient-to-r from-gold to-gold-light px-6 py-3 text-xs font-semibold text-white shadow-md shadow-gold/20 transition-all hover:shadow-lg"
+                  >
+                    Go to Predefined Routes
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      if (!canConfirm) {
+                        alert("Please select date and pickup time.");
+                        return;
+                      }
+                      onConfirm(`${summary} • ${date} ${time}`, priceCar, priceVan);
+                      document.getElementById("book")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="mt-7 w-full rounded-full bg-gradient-to-r from-gold to-gold-light py-4 text-sm font-semibold text-white shadow-lg shadow-gold/25 hover:shadow-xl"
+                  >
+                    Use This Custom {kind === "transfer" ? "Transfer" : "Tour"}
+                  </button>
 
-              <p className="mt-3 text-center text-xs text-text-muted">
-                You'll confirm details in the booking form below. Questions? +39 328 123 4961
-              </p>
+                  <p className="mt-3 text-center text-xs text-text-muted">
+                    You'll confirm details in the booking form below. Questions? +39 328 123 4961
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
