@@ -532,7 +532,7 @@ export default function Booking({ selection }: Props) {
                       rows={3}
                       value={specialRequests}
                       onChange={(e) => setSpecialRequests(e.target.value)}
-                      placeholder="Child seat, language preference, flight number if airport transfer..."
+                      placeholder="Language preference, flight number if airport transfer..."
                       className="w-full rounded-xl border border-border bg-cream-warm px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
                     />
                   </div>

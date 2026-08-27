@@ -139,7 +139,7 @@ export default function Routes({ onSelect }: Props) {
                     </div>
                     {expandedTour === t.id && (
                       <p className="mt-3 text-xs leading-relaxed text-text-muted">
-                        Includes hotel/port pickup, professional driver, bottled water, Wi-Fi, and flexible photo stops. Entrance fees not included unless stated. Car seats up to 4 guests, van up to 7.
+                        Includes hotel/port pickup, professional driver, bottled water and flexible photo stops. Entrance fees not included unless stated. Car seats up to 4 guests, van up to 7.
                       </p>
                     )}
                   </div>
@@ -176,7 +176,7 @@ export default function Routes({ onSelect }: Props) {
         )}
 
         <p className="mt-8 text-center text-xs text-text-muted">
-          Prices are per vehicle — car up to 4 guests, van up to 7. Child seats free. All taxes included. Need a larger group? Contact us at +39 328 123 4961.
+          Prices are per vehicle — car up to 4 guests, van up to 7. All taxes included. Need a larger group? Contact us at +39 328 123 4961.
         </p>
       </div>
     </section>

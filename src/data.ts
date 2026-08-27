@@ -37,13 +37,13 @@ export const transferRoutes: TransferRoute[] = [
 export const tourRoutes: TourRoute[] = [
   {
     id: "tour1",
-    label: "Tour: Civitavecchia — pickup from Roma (max 8 hours)",
+    label: "Tour: Rome from Civitavecchia — cruise port pickup (max 8 hours)",
     priceCar: 500,
     priceVan: 600,
     hours: 8,
     extraHourPrice: 50,
-    description: "From Roma to the historic port of Civitavecchia — seaside promenade, medieval centre and the Etruscan coast at your own pace.",
-    highlights: ["Civitavecchia", "Etruscan coast", "Seaside promenade"],
+    description: "Pickup at Civitavecchia cruise port, then the best of Rome — ancient, baroque and hidden gems — timed perfectly to your ship's schedule.",
+    highlights: ["Civitavecchia port pickup", "Colosseum", "Trevi Fountain"],
   },
   {
     id: "tour2",
