@@ -27,11 +27,11 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <a href="#top" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-gold to-gold-light shadow-md shadow-gold/30">
+        <a href="#top" className="flex min-w-0 items-center gap-2.5">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-gold to-gold-light shadow-md shadow-gold/30">
             <span className="font-display text-[11px] font-bold leading-none text-white">MR</span>
           </div>
-          <span className="text-[15px] font-semibold tracking-tight text-text-primary">
+          <span className="truncate text-sm font-semibold tracking-tight text-text-primary sm:text-[15px]">
             maxrome<span className="font-light text-gold">executivechauffeur</span>
           </span>
         </a>

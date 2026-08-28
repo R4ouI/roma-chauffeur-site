@@ -20,7 +20,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-text-primary">
+    <div className="min-h-screen overflow-x-clip bg-white text-text-primary">
       <Navbar />
       <main>
         <Hero />
