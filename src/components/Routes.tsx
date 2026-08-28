@@ -25,28 +25,28 @@ export default function Routes({ onSelect }: Props) {
           </p>
 
           {/* Tab switcher */}
-          <div className="mt-8 inline-flex rounded-full border border-border bg-cream-warm p-1">
+          <div className="mt-8 inline-flex max-w-full rounded-full border border-border bg-cream-warm p-1">
             <button
               onClick={() => setTab("transfer")}
-              className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
+              className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
                 tab === "transfer"
                   ? "bg-text-primary text-white shadow"
                   : "text-text-secondary hover:text-text-primary"
               }`}
             >
               Transfer Routes
-              <span className={`ml-2 rounded-full px-2 py-0.5 text-xs ${tab === "transfer" ? "bg-white/20 text-white" : "bg-border text-text-muted"}`}>{transferRoutes.length}</span>
+              <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs sm:ml-2 ${tab === "transfer" ? "bg-white/20 text-white" : "bg-border text-text-muted"}`}>{transferRoutes.length}</span>
             </button>
             <button
               onClick={() => setTab("tour")}
-              className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
+              className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
                 tab === "tour"
                   ? "bg-text-primary text-white shadow"
                   : "text-text-secondary hover:text-text-primary"
               }`}
             >
               Tour Routes
-              <span className={`ml-2 rounded-full px-2 py-0.5 text-xs ${tab === "tour" ? "bg-white/20 text-white" : "bg-border text-text-muted"}`}>{tourRoutes.length}</span>
+              <span className={`ml-1.5 rounded-full px-2 py-0.5 text-xs sm:ml-2 ${tab === "tour" ? "bg-white/20 text-white" : "bg-border text-text-muted"}`}>{tourRoutes.length}</span>
             </button>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Routes({ onSelect }: Props) {
             {transferRoutes.map((r) => (
               <div
                 key={r.id}
-                className="group flex flex-col justify-between rounded-2xl border border-border bg-white p-5 transition-all hover:border-gold/40 hover:shadow-md"
+                className="group flex min-w-0 flex-col justify-between rounded-2xl border border-border bg-white p-5 transition-all hover:border-gold/40 hover:shadow-md"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
@@ -75,7 +75,7 @@ export default function Routes({ onSelect }: Props) {
                   </div>
                 </div>
 
-                <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
                   <div className="space-y-0.5">
                     <div className="text-xs">
                       <span className="font-display text-lg font-medium text-text-primary">€{r.priceCar}</span>
@@ -91,7 +91,7 @@ export default function Routes({ onSelect }: Props) {
                       onSelect(r.label, r.priceCar, r.priceVan);
                       document.getElementById("book")?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="rounded-full bg-text-primary px-4 py-2 text-xs font-semibold text-white transition-colors group-hover:bg-gold"
+                    className="flex-shrink-0 whitespace-nowrap rounded-full bg-text-primary px-4 py-2 text-xs font-semibold text-white transition-colors group-hover:bg-gold"
                   >
                     Select
                   </button>
@@ -107,7 +107,7 @@ export default function Routes({ onSelect }: Props) {
             {tourRoutes.map((t) => (
               <div
                 key={t.id}
-                className="group rounded-2xl border border-border bg-white p-6 transition-all hover:border-gold/40 hover:shadow-md lg:p-7"
+                className="group min-w-0 rounded-2xl border border-border bg-white p-6 transition-all hover:border-gold/40 hover:shadow-md lg:p-7"
               >
                 <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex-1">
@@ -144,7 +144,7 @@ export default function Routes({ onSelect }: Props) {
                     )}
                   </div>
 
-                  <div className="flex flex-row items-center justify-between gap-6 border-t border-border pt-5 lg:flex-col lg:items-end lg:border-t-0 lg:pt-0">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-5 lg:flex-col lg:items-end lg:border-t-0 lg:pt-0">
                     <div className="text-right">
                       <div className="text-xs text-text-muted">
                         <span className="font-display text-lg font-medium text-text-primary">€{t.priceCar}</span> Car
@@ -164,7 +164,7 @@ export default function Routes({ onSelect }: Props) {
                         onSelect(t.label, t.priceCar, t.priceVan);
                         document.getElementById("book")?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="rounded-full bg-text-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold"
+                      className="flex-shrink-0 whitespace-nowrap rounded-full bg-text-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-gold"
                     >
                       Select Tour
                     </button>

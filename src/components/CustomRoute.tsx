@@ -71,11 +71,11 @@ export default function CustomRoute({ onConfirm }: Props) {
 
             <div className="mt-8 rounded-2xl border border-border bg-white p-6 shadow-sm lg:p-7">
               {/* Kind toggle */}
-              <div className="mb-6 inline-flex rounded-full border border-border bg-cream-warm p-1">
+              <div className="mb-6 inline-flex max-w-full rounded-full border border-border bg-cream-warm p-1">
                 <button
                   type="button"
                   onClick={() => setKind("transfer")}
-                  className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
+                  className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
                     kind === "transfer"
                       ? "bg-text-primary text-white shadow"
                       : "text-text-secondary hover:text-text-primary"
@@ -86,7 +86,7 @@ export default function CustomRoute({ onConfirm }: Props) {
                 <button
                   type="button"
                   onClick={() => setKind("tour")}
-                  className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
+                  className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
                     kind === "tour"
                       ? "bg-text-primary text-white shadow"
                       : "text-text-secondary hover:text-text-primary"

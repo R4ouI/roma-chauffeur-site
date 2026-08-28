@@ -3,11 +3,14 @@ export default function Hero() {
     <section id="top" className="relative flex min-h-svh items-center overflow-hidden bg-cream-warm">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
-          src="/Spartan.jpg"
-          alt="Rome — eternal city"
-          className="h-full w-full object-cover object-center"
-        />
+        <picture>
+          <source media="(max-width: 639px)" srcSet="/SpartanMobile.jpg" />
+          <img
+            src="/Spartan.jpg"
+            alt="Rome — eternal city"
+            className="h-full w-full object-cover object-center"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent sm:from-white/95 sm:via-white/75" />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/50" />
       </div>

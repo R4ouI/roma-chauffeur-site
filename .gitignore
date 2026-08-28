@@ -4,6 +4,9 @@ node_modules/
 # Build output
 dist/
 
+# Browser test profiles
+.chrome-profile*/
+
 # Environment variables (contains API keys)
 .env
 .env.local
