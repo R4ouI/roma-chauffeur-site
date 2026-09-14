@@ -234,10 +234,11 @@ export default function Reviews() {
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-xs font-medium text-text-muted">
+                    <label htmlFor="review-name" className="mb-2 block text-xs font-medium text-text-muted">
                       Full name *
                     </label>
                     <input
+                      id="review-name"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -246,10 +247,11 @@ export default function Reviews() {
                     />
                   </div>
                   <div>
-                    <label className="mb-2 block text-xs font-medium text-text-muted">
+                    <label htmlFor="review-origin" className="mb-2 block text-xs font-medium text-text-muted">
                       Origin (optional)
                     </label>
                     <input
+                      id="review-origin"
                       value={origin}
                       onChange={(e) => setOrigin(e.target.value)}
                       placeholder="London, UK"
@@ -259,10 +261,11 @@ export default function Reviews() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-xs font-medium text-text-muted">
+                  <label htmlFor="review-comment" className="mb-2 block text-xs font-medium text-text-muted">
                     Your comment *
                   </label>
                   <textarea
+                    id="review-comment"
                     required
                     rows={3}
                     value={comment}
@@ -273,7 +276,7 @@ export default function Reviews() {
                 </div>
 
                 {submitError && (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+                  <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
                     <p className="flex items-center gap-2 text-sm text-red-700">
                       <svg className="h-4 w-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />

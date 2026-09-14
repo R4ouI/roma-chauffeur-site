@@ -325,7 +325,7 @@ function ContactForm() {
 
       {/* Error message */}
       {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
           <p className="flex items-center gap-2 text-sm text-red-700">
             <svg
               className="h-4 w-4 flex-shrink-0"
@@ -404,10 +404,11 @@ function Input({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-medium text-text-muted">
+      <label htmlFor={name} className="mb-2 block text-xs font-medium text-text-muted">
         {label}
       </label>
       <input
+        id={name}
         required={required}
         type={type}
         name={name}
