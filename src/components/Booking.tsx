@@ -594,7 +594,11 @@ export default function Booking({ selection }: Props) {
                 </button>
 
                 <p className="mt-3 text-center text-[11px] text-text-muted">
-                  Free cancellation up to 24h before. Questions?{" "}
+                  By submitting, you accept our{" "}
+                  <a href="/privacy-policy.html" className="font-medium text-gold hover:underline">
+                    Privacy Policy
+                  </a>
+                  . Free cancellation up to 24h before. Questions?{" "}
                   <a
                     href="tel:+393281234961"
                     className="font-medium text-gold"

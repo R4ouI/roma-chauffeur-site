@@ -303,6 +303,13 @@ export default function Reviews() {
                     "Submit Review"
                   )}
                 </button>
+                <p className="mt-3 text-center text-[11px] text-text-muted">
+                  By submitting, you consent to your review being published and accept our{" "}
+                  <a href="/privacy-policy.html" className="font-medium text-gold hover:underline">
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
               </form>
             )}
           </div>

@@ -378,7 +378,11 @@ function ContactForm() {
         )}
       </button>
       <p className="text-center text-[11px] text-text-muted">
-        We'll respond from maxromeexecutivechauffeur@outlook.it within a few
+        By submitting, you accept our{" "}
+        <a href="/privacy-policy.html" className="font-medium text-gold hover:underline">
+          Privacy Policy
+        </a>
+        . We'll respond from maxromeexecutivechauffeur@outlook.it within a few
         hours.
       </p>
     </form>
