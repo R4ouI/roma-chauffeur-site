@@ -66,10 +66,11 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row">
           <p>© {new Date().getFullYear()} maxromeexecutivechauffeur. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <a href="#contact" className="transition-colors hover:text-white/70">Contact</a>
-            <a href="mailto:maxromeexecutivechauffeur@outlook.it" className="transition-colors hover:text-white/70">Email</a>
-            <a href="https://wa.me/393281234961" target="_blank" rel="noreferrer" className="transition-colors hover:text-white/70">WhatsApp</a>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+            <a href="/legal-notice.html" className="transition-colors hover:text-white/70">Legal Notice</a>
+            <a href="/privacy-policy.html" className="transition-colors hover:text-white/70">Privacy Policy</a>
+            <a href="/cookie-policy.html" className="transition-colors hover:text-white/70">Cookie Policy</a>
+            <a href="/terms-and-conditions.html" className="transition-colors hover:text-white/70">Terms &amp; Conditions</a>
           </div>
         </div>
       </div>
